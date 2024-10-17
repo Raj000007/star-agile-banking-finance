@@ -1,51 +1,47 @@
 package com.project.staragile.banking;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.web.bind.annotation.*;
+import com.project.staragile.banking.model.Account;
+import com.project.staragile.banking.service.AccountService;
+import org.springframework.http.ResponseEntity;
 
 @RestController
+@RequestMapping("/account")
 public class AccountController {
-	
-	@Autowired
-	AccountService accountService;
-	
-	@Autowired
-	ObjectMapper objectMapper;
-	
-	@GetMapping("/sayHello")
-	public String sayHello() {
-		return "Hello from CBS Bank";
-	}
-	
-	
-	@GetMapping("/createAccount")
-	public Account createAccount(){
-		return accountService.createAccount();
-	}
-	
-	@PostMapping("/registerAccount")
-	public Account registerAccount(@RequestBody Account account) {
-		if(account != null) {
-			return accountService.registerAccount(account);
-		}
-		System.out.println("post called");
-		return account;
-	}
-	
-	@GetMapping("/getAccount/{accountNumber}")
-	public Account getAccountDetails(@PathVariable(value="accountNumber") int accountNumber) {
-		System.out.println(accountNumber);
-		Account account = accountService.getAccountDetails(accountNumber);
-		return account;
-	}
 
+    @Autowired
+    private AccountService accountService;
+
+    // POST - /createAccount
+    @PostMapping("/createAccount")
+    public ResponseEntity<String> createAccount(@RequestBody Account account) {
+        accountService.createAccount(account);
+        return ResponseEntity.ok("Account created successfully.");
+    }
+
+    // PUT - /updateAccount/{accountNo}
+    @PutMapping("/updateAccount/{accountNo}")
+    public ResponseEntity<String> updateAccount(@PathVariable String accountNo, @RequestBody Account account) {
+        accountService.updateAccount(accountNo, account);
+        return ResponseEntity.ok("Account updated successfully.");
+    }
+
+    // GET - /viewAccount/{accountNo}
+    @GetMapping("/viewAccount/{accountNo}")
+    public ResponseEntity<Account> viewAccount(@PathVariable String accountNo) {
+        Account account = accountService.viewAccount(accountNo);
+        if (account != null) {
+            return ResponseEntity.ok(account);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // DELETE - /deleteAccount/{accountNo}
+    @DeleteMapping("/deleteAccount/{accountNo}")
+    public ResponseEntity<String> deleteAccount(@PathVariable String accountNo) {
+        accountService.deleteAccount(accountNo);
+        return ResponseEntity.ok("Account deleted successfully.");
+    }
 }
