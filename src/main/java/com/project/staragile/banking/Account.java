@@ -3,66 +3,44 @@ package com.project.staragile.banking;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity
 public class Account {
 
-	@Id
-	private int accountNumber;
-	
-	private String accountName;
-	
-	private String accountType;
-	
-	private double accountBalance;
+    private String accountNo;
+    private String accountHolderName;
+    private String accountType;
+    private double balance;
 
-	public Account(int accountNumber, String accountName, String accountType, double accountBalance) {
-		super();
-		this.accountNumber = accountNumber;
-		this.accountName = accountName;
-		this.accountType = accountType;
-		this.accountBalance = accountBalance;
-	}
+    // Getters and setters
+    public String getAccountNo() {
+        return accountNo;
+    }
 
-	public Account() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    public void setAccountNo(String accountNo) {
+        this.accountNo = accountNo;
+    }
 
-	public int getAccountNumber() {
-		return accountNumber;
-	}
+    public String getAccountHolderName() {
+        return accountHolderName;
+    }
 
-	public void setAccountNumber(int accountNumber) {
-		this.accountNumber = accountNumber;
-	}
+    public void setAccountHolderName(String accountHolderName) {
+        this.accountHolderName = accountHolderName;
+    }
 
-	public String getAccountName() {
-		return accountName;
-	}
+    public String getAccountType() {
+        return accountType;
+    }
 
-	public void setAccountName(String accountName) {
-		this.accountName = accountName;
-	}
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
 
-	public String getAccountType() {
-		return accountType;
-	}
+    public double getBalance() {
+        return balance;
+    }
 
-	public void setAccountType(String accountType) {
-		this.accountType = accountType;
-	}
-
-	public double getAccountBalance() {
-		return accountBalance;
-	}
-
-	public void setAccountBalance(double accountBalance) {
-		this.accountBalance = accountBalance;
-	}
-	
-	
-	
-	
-	
-	
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
 }
+
